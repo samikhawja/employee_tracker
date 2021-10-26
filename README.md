@@ -43,6 +43,10 @@ To get started, use the following commands in your terminal:
 
 From the root of the file directory, use the following command:
 ```
+npm install
+```
+then,
+```
 node server.js
 ```
 
