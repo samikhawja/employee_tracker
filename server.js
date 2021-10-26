@@ -59,7 +59,18 @@ function viewEmployees() {
     })
 }
 
-
+function addDepartment(){
+    inquirer.prompt({
+            type: "input",
+            message: "What is the name of the department?",
+            name: "addDepo"
+        }).then((select) => {
+            db.query(`INSERT INTO department (name) VALUES ("${select.addDepo}");`, (err, res) => {
+                console.log("Department is added to the database");
+                viewDepartments();
+            })
+        });
+}
 
 
 // {
