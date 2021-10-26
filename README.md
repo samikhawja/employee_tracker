@@ -1,4 +1,4 @@
-# Note Taker
+# Employee Tracker
 
 <!-- TABLE OF CONTENTS -->
 <details open="open">
@@ -25,39 +25,38 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-<img src="./Develop/public/assets/images/webpage.png" alt="Webpage screenshot">
+<img src="./assets/images/webpage.png" alt="Screenshot of terminal">
 
-For this application, I had to finsh the provided files to create a note taker webpage. The user will be able to make notes and save them while also going back to them! Per usual, this tested my knowledge with node.js and made me do a bunch of research to deliver the best application to the user. Of course, this was a fun to make and quite the challenge!
+For this application, I had to create an employee tracker application. The user will be able to see tables of the different departments, roles and employees while also being able to add departments, roles and employees and updating employees. Per usual, this tested my knowledge with node.js and made me do a bunch of research to deliver the best application to the user. Of course, this was a fun to make and quite the challenge!
 
 The websites I used to help create the application are listed below in the <a href="#acknowledgements">acknowledgements</a>.
 
 ### Built With
 
-I used <a href="https://code.visualstudio.com/">Visual Studio Code</a> to finish creating the application. The files were provided by the professor and I just had to finish the build.
+I used <a href="https://code.visualstudio.com/">Visual Studio Code</a> to create this application.
 
 
 <!-- GETTING STARTED -->
 ## Getting Started
 
-Go to the deployed link below in <a href="#project-link">Project Link</a> tab.
+To get started, use the following commands in your terminal:
+
+From the root of the file directory, use the following command:
+```
+node server.js
+```
 
 
 <!-- USAGE EXAMPLES -->
 ## Code Snippets
 
-Below is a function is used in order for the webpage to read what I have in my db.json file. It will display on the webpage when you click on a previous note and allow you to write to the file and override the previous note.
+Below is a then statement I had to use in order to add or update depending on what the user chose. I had multiple then statements and at times it was confusing because in was template literal while adding what was selected and everything had to be perfect. I also added the the table so when the user adds or updates, they can see the changes right away!
 ```
-const readAndAppend = (content, file) => {
-  fs.readFile(file, 'utf8', (err, data) => {
-    if (err) {
-      console.error(err);
-    } else {
-      const parsedData = JSON.parse(data);
-      parsedData.push(content);
-      writeToFile(file, parsedData);
-    }
-  });
-};
+.then((select) => {
+  db.query(`INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES ("${select.employeeFirst}", "${select.employeeLast}", ${select.employeeRole}, ${select.employeeManager});`, (err, res) => {
+    console.log("Employee is updated to the database");
+    viewEmployees();
+})
 ```
 
 
@@ -74,15 +73,11 @@ Sami Khawja: Skhawja11@gmail.com
 
 
 ## Project Links
-Project Link: [GitHub](https://github.com/samikhawja/note_taker)
-
-Live Link: [Heroku](https://stark-hamlet-02477.herokuapp.com)
-
+Project Link: [GitHub](https://github.com/samikhawja/employee_tracker)
 
 
 <!-- ACKNOWLEDGEMENTS -->
 ## Acknowledgements
-* Taylor Hackbart
 * [W3Schools](https://www.w3schools.com/)
 * [StackOverflow](https://stackoverflow.com/)
 * [Mozilla](https://developer.mozilla.org/en-US/docs/Web/JavaScript)

@@ -125,3 +125,21 @@ function addEmployee(){
             })
         });
 }
+
+function update(){
+    inquirer.prompt({
+            type: "input",
+            message: "What is the employee's name that you would like to update??",
+            name: "employeeFirst",
+        },
+        {
+            type: "input",
+            message: "What is the employee's new role?",
+            name: "employeeLast",
+        }).then((select) => {
+            db.query(`INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES ("${select.employeeFirst}", "${select.employeeLast}", ${select.employeeRole}, ${select.employeeManager});`, (err, res) => {
+                console.log("Employee is updated to the database");
+                viewEmployees();
+            })
+        });
+}
