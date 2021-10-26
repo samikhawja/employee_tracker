@@ -24,9 +24,9 @@ function menu(){
         choices: ["view all departments", "view all roles", "view all employees", "add a department", "add a role", "add an employee", "update an employee role"],
     }).then((select) => {
         switch(select.menu){
-            case "view all departments": viewDepartment(); break;
+            case "view all departments": viewDepartments(); break;
             case "view all roles": viewRoles(); break;
-            case "view all employees": addDepartment(); break;
+            case "view all employees": viewEmployees(); break;
             case "add a department": addDepartment(); break;
             case "add a role": addDepartment(); break;
             case "add an employee": addDepartment(); break;
@@ -35,7 +35,7 @@ function menu(){
     });
 }
 
-function viewDepartment() {
+function viewDepartments() {
     const query = "SELECT * FROM department;";
     db.query(query, function (err, res) {
         console.table(res);
@@ -45,6 +45,14 @@ function viewDepartment() {
 
 function viewRoles() {
     const query = "SELECT * FROM role;";
+    db.query(query, function (err, res) {
+        console.table(res);
+        menu();
+    })
+}
+
+function viewEmployees() {
+    const query = "SELECT * FROM employees;";
     db.query(query, function (err, res) {
         console.table(res);
         menu();
