@@ -28,9 +28,9 @@ function menu(){
             case "view all roles": viewRoles(); break;
             case "view all employees": viewEmployees(); break;
             case "add a department": addDepartment(); break;
-            case "add a role": addDepartment(); break;
-            case "add an employee": addDepartment(); break;
-            case "update an employee role": addDepartment(); break;
+            case "add a role": addRole(); break;
+            case "add an employee": addEmployee(); break;
+            case "update an employee role": update(); break;
         }
     });
 }
@@ -72,64 +72,56 @@ function addDepartment(){
         });
 }
 
+function addRole(){
+    inquirer.prompt({
+            type: "input",
+            message: "What is the name of the role?",
+            name: "roleName",
+        },
+        {
+            type: "input",
+            message: "What is role's salary?",
+            name: "roleSalary",
+        },
+        {
+            type: "list",
+            message: "What department does this role belong to?",
+            name: "roleDepartment",
+            choices: ["1", "2", "3"],
+        }).then((select) => {
+            db.query(`INSERT INTO role (title, salary, department_id) VALUES ("${select.roleName}", ${select.roleSalary}, ${select.roleDepartment});`, (err, res) => {
+                console.log("Role is added to the database");
+                viewRoles();
+            })
+        });
+}
 
-// {
-//     type: "input",
-//     message: "What is the name of the department?",
-//     name: "addDepartment",
-//     when: () => answer.menu === "add a department"
-// },
-// {
-//     type: "input",
-//     message: "",
-//     name: "roleName",
-//     when: () => answer.menu === "add a role"
-// },
-// {
-//     type: "input",
-//     message: "",
-//     name: "roleSalary",
-//     when: () => answer.menu === "add a role"
-// },
-// {
-//     type: "list",
-//     message: "",
-//     name: "roleDepartment",
-//     choices: [],
-//     when: () => answer.menu === "add a role"
-// },
-// {
-//     type: "input",
-//     message: "",
-//     name: "employeeFirst",
-//     when: () => answer.menu === "add an employee"
-// },
-// {
-//     type: "input",
-//     message: "",
-//     name: "employeeLast",
-//     when: () => answer.menu === "add an employee"
-// },
-// {
-//     type: "input",
-//     message: "",
-//     name: "employeeRole",
-//     when: () => answer.menu === "add an employee"
-// },
-// {
-//     type: "input",
-//     message: "",
-//     name: "employeeManager",
-//     when: () => answer.menu === "add an employee"
-// },
-
-// function init(){
-//     inquirer
-//     .prompt(questions)
-//     .then((response) => {
-//         if(response.menu === "done"){
-//             console.log("Session Complete")
-//         }
-//     });
-// }
-// init();
+function addEmployee(){
+    inquirer.prompt({
+            type: "input",
+            message: "What is the employee's first name?",
+            name: "employeeFirst",
+        },
+        {
+            type: "input",
+            message: "What is the employee's last name?",
+            name: "employeeLast",
+        },
+        {
+            type: "input",
+            message: "What is the employee's role?",
+            name: "employeeRole",
+            choices: ["1", "2", "3", "4", "5", "6"],
+        },
+        {
+            type: "input",
+            message: "Who is the employee's manager id?",
+            name: "employeeManager",
+            choices: ["2", "4", "6", "null"],
+        }).then((select) => {
+            db.query(`INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES ("${select.employeeFirst}", "${select.employeeLast}", ${select.employeeRole}, ${select.employeeManager});`, (err, res) => {
+                console.log("Employee is added to the database");
+                viewEmployees();
+            })
+        });
+}
